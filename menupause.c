@@ -14,14 +14,18 @@ void menu (SDL_Surface * ecran)
   SDL_Rect posText;
 SDL_Surface *optionz= NULL,*back= NULL,*sound_on=NULL,*sound_off=NULL,*FULLSCREEN[2]={NULL};
 int sound=0;
-SDL_Rect positionback,positionsound,positionsound2,positionf;
+SDL_Rect positionback,positionsound,positionsound2,positionf,p;
 SDL_Surface *text = NULL,*text2 = NULL;
     SDL_Event event;
     int continuer = 1;
 TTF_Font *font;
+ SDL_Surface *animation[20];
+   char tab_animation[20];
+int q;
 
 SDL_Color couleur={0,0,102};
-
+p.x=5;
+p.y=5;
    positionback.x =0;
     positionback.y=0;
 
@@ -58,7 +62,12 @@ positionf.y=550;
     affiche1[0] = SDL_LoadBMP("menu/option1.bmp");
     font = TTF_OpenFont("de.ttf",90);
     affiche2[0]= SDL_LoadBMP("menu/quit1.bmp");
-      
+      for (q=0;q<4;q++) 
+{
+sprintf(tab_animation,"animation%d.png",q+1);
+animation[q]=IMG_Load(tab_animation);    
+}
+q=0;
    int a=0,b=0,c=0,j=0;
 optionz=IMG_Load("menu/op.png");
 sound_on=IMG_Load("menu/son.png");
@@ -90,6 +99,7 @@ SDL_BlitSurface(affiche1[0], NULL, ecran, & positionAffiche1);
 SDL_BlitSurface(text, NULL, ecran, &posText);
 int fullscreen=0;
 int i=0;
+q=0;
  while (continuer!=0)
     {
        SDL_PollEvent( & event) ;
@@ -220,7 +230,12 @@ if(i==1)
        b=0;
   
         }
+
  SDL_BlitSurface(imageDeFond, NULL, ecran, & positionFond);
+ SDL_BlitSurface(animation[q],NULL,ecran,&p);
+ q=q+1;
+if(q==4)
+q=0;
 SDL_BlitSurface(text, NULL, ecran, &posText);
 SDL_BlitSurface(affiche[a], NULL, ecran, & positionAffiche);
 SDL_BlitSurface(affiche1[b], NULL, ecran, & positionAffiche1);
@@ -255,6 +270,10 @@ if (fullscreen==0)
       TTF_Quit();
       Mix_FreeChunk(click);
       SDL_FreeSurface(imageDeFond);
+for (q=0;i<4;q++) 
+            {
+          SDL_FreeSurface(animation[q+1]);  
+            }
       SDL_FreeSurface(affiche[0]);
       SDL_FreeSurface(affiche1[0]);
       SDL_FreeSurface(affiche2[0]);
