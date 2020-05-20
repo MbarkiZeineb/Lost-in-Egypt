@@ -135,6 +135,11 @@ break;
 
 }
 }
+if(camera.x==7000)
+{
+SDL_Delay(1000);
+game1(ecran);
+}
 }
 
 //free(&map,&perso);
@@ -165,7 +170,7 @@ fond=IMG_Load("xb.png");
 SDL_Surface* pSurface=NULL;
 pSurface= IMG_Load("back1masque.png");
 vie vie, vie2;
-SDL_Event event;
+SDL_Event event,event1;
 SDL_Surface *collisionMap =NULL;
 SDL_Rect camera = { 3350, 0 , 1300, 400 }, post ,camera2 = {3350, 0 ,1300,400} ;
 anubis anubis;
@@ -184,7 +189,7 @@ post.y=10;
 SDL_Rect tempsPos;
 		SDL_Surface* T;
 
-SDL_Init(SDL_INIT_VIDEO| SDL_INIT_TIMER );
+   SDL_Init(SDL_INIT_VIDEO| SDL_INIT_TIMER );
   TTF_Init(); 
 
 ecran = SDL_SetVideoMode(1300,800, 32, SDL_HWSURFACE | SDL_DOUBLEBUF );  
@@ -197,36 +202,62 @@ FILE* f=fopen("savedgame.txt","r");
 fscanf(f,"%hd %hd %hd %d  \n",&perso.position.x,&perso.position.y,&camera.x,&score);
  fclose(f);}
  
-    SDL_Delay(10); 
+   
  initialiserennemi(&ennemi);
 initialiserperso(&perso);
-initialiserperso(&perso1);
+ initialiserperso1(&perso1);
 initialiseranubis(&anubis);
 initialiserfond3(&map);
 initialiserfond2(&map1);
-SDL_EnableKeyRepeat(20,20);
+
 initialiservie(&vie);
 initialiservie2(&vie2);
 init_enigme(&e);
-
-SDL_EnableKeyRepeat(300,10);
+int keys[322]={0};
+SDL_EnableKeyRepeat(10,10);
 while (continuer)
 { 
+SDL_WaitEvent(&event);
+switch(event.type)
+{case SDL_KEYDOWN:
+            keys[event.key.keysym.sym]=1;
+            break;
+     case SDL_KEYUP:
+            keys[event.key.keysym.sym]=0;
+            break;
+} 
+		if(keys[SDLK_q])
+		{d1=2;	
+                 }
+		if(keys[SDLK_d])
+		{d1=1;} 
+		if(keys[SDLK_z])
+		{d1=3;	
+                 }   	
+              if(keys[SDLK_s])
+		{d1=4; }
+	      if(keys[SDLK_LEFT])
+		{d=2;}	
+                if(keys[SDLK_RIGHT])    	
+		{d=1; }
+		if(keys[SDLK_UP])
+		{d=3;	}
+                  if(keys[SDLK_DOWN])
+		{d=4; }	
+ 		if(keys[SDLK_ESCAPE])
+         {continuer=quitscreen(&ecran,perso,camera,score);}
 
  t2 = SDL_GetTicks();       //Minute       //Seconde   //Dixieme
     sprintf(chrono, "%d:%d", t2/1000/60%60, t2/1000%60);
     texte = TTF_RenderText_Shaded(police, chrono, rouge,noir);
-
-d=direction(event,&continuer);
 x = mouv(d,x);
-d1=direction2(event,&continuer);
 x1 = mouv(d1,x1);
 y=splitennemi(y);
 
 perso=mouvement(perso, d,camera);
-perso1=mouvement(perso1, d,camera2);
+perso1=mouvement(perso1, d1,camera2);
 camera =scrolling(d,camera,perso);
-camera2 =scrolling(d,camera,perso1);
+camera2 =scrolling(d1,camera2,perso1);
 
 //collision(&perso,pSurface,d);
 if(camera.x==2000&&touche==0)
@@ -254,28 +285,10 @@ DrawScore1(ecran,&score1,police);
 SDL_BlitSurface(texte, NULL, ecran,&post);
    
 afficherennemi(ennemi,ecran,y);
-
-SDL_WaitEvent(&event);
-switch(event.type)
-{
-
-case SDL_KEYDOWN:
-
-            switch (event.key.keysym.sym)
-            {
- 		case SDLK_ESCAPE:
-		  
-    
- continuer=quitscreen(&ecran,perso,camera,score);
-break;
-
-}
-}
 SDL_Flip(ecran);
 SDL_Delay(80);
 
 }
-//free(&map,&perso);
 TTF_Quit();
 SDL_Quit();
 
