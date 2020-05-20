@@ -25,7 +25,7 @@ position.y=275;
 fond=IMG_Load("xb.png");
 SDL_Surface* pSurface=NULL;
 pSurface= IMG_Load("back1masque.png");
-vie vie;
+vie vie ;
 SDL_Event event;
 SDL_Surface *collisionMap =NULL;
 SDL_Rect camera = { 0, 0, 1200, 600 },post;
@@ -59,13 +59,13 @@ initialiseranubis(&anubis);
 initialiserfond(&map);
 SDL_EnableKeyRepeat(20,20);
 initialiservie(&vie);
+
 init_enigme(&e) ;
 int touche=0;
 SDL_EnableKeyRepeat(300,10);
-SDL_ShowCursor(SDL_DISABLE);
-SDL_LockSurface;
 int score=200;
 int touche1=0;
+
 while (continuer)
 { 
  
@@ -84,17 +84,18 @@ collisionennemi(&perso,&ennemi,&camera,&vie);
 //collision(&perso,pSurface,d);
 
 
-if(collision_Parfaite(pSurface,perso,5,d)==1)
+if(collision_Parfaite(pSurface,perso,10,d)==1)
 {camera.x=camera.x-10;
  if(d==4)
 perso.position.y-=30;
+perso.position.y=300;
 }
 
 
 
 
 
-/*if(camera.x==2000&&touche==0)
+if(camera.x==2000&&touche==0)
 {
 
 touche=1;
@@ -106,7 +107,7 @@ if(camera.x==2500&&touche1==0)
 {
 touche1=1;
 enigme1(&ecran,&vie.nb,&score);
-}*/
+}
 afficherfond(map,camera,ecran);
 afficheranubis(anubis ,ecran,camera);
 afficherperso(perso,ecran,x);
@@ -118,6 +119,22 @@ afficherennemi(ennemi,ecran,y);
 
 SDL_Flip(ecran);
 SDL_Delay(80);
+SDL_WaitEvent(&event);
+switch(event.type)
+{
+
+case SDL_KEYDOWN:
+
+            switch (event.key.keysym.sym)
+            {
+ 		case SDLK_ESCAPE:
+		  
+    
+ continuer=quitscreen(&ecran,perso,camera,score);
+break;
+
+}
+}
 }
 
 //free(&map,&perso);
@@ -136,18 +153,18 @@ char chrono[16];
 
 SDL_Surface *fond=NULL,*ecran2=NULL;
 SDL_Rect position;
-perso perso ;
+perso perso , perso1 ;
 ennemis ennemi ;
 int continuer = 1;
 map map, map1;
 enigme e;
-int d;
+int d,d1;
 position.x=250;
 position.y=275;
 fond=IMG_Load("xb.png");
 SDL_Surface* pSurface=NULL;
 pSurface= IMG_Load("back1masque.png");
-vie vie;
+vie vie, vie2;
 SDL_Event event;
 SDL_Surface *collisionMap =NULL;
 SDL_Rect camera = { 3350, 0 , 1300, 400 }, post ,camera2 = {3350, 0 ,1300,400} ;
@@ -157,11 +174,11 @@ srand(time(NULL)) ;
 
 int touche=0;
 
-int score=200;
+int score=200,score1=200;
 int touche1=0;
 int x=0,y=1;
 post.x=600;
-
+int x1=0,y1=1;
 post.y=10;
 	
 SDL_Rect tempsPos;
@@ -183,11 +200,13 @@ fscanf(f,"%hd %hd %hd %d  \n",&perso.position.x,&perso.position.y,&camera.x,&sco
     SDL_Delay(10); 
  initialiserennemi(&ennemi);
 initialiserperso(&perso);
+initialiserperso(&perso1);
 initialiseranubis(&anubis);
-initialiserfond(&map);
+initialiserfond3(&map);
 initialiserfond2(&map1);
 SDL_EnableKeyRepeat(20,20);
 initialiservie(&vie);
+initialiservie2(&vie2);
 init_enigme(&e);
 
 SDL_EnableKeyRepeat(300,10);
@@ -200,11 +219,14 @@ while (continuer)
 
 d=direction(event,&continuer);
 x = mouv(d,x);
+d1=direction2(event,&continuer);
+x1 = mouv(d1,x1);
 y=splitennemi(y);
 
 perso=mouvement(perso, d,camera);
+perso1=mouvement(perso1, d,camera2);
 camera =scrolling(d,camera,perso);
-
+camera2 =scrolling(d,camera,perso1);
 
 //collision(&perso,pSurface,d);
 if(camera.x==2000&&touche==0)
@@ -220,12 +242,15 @@ if(camera.x==2500&&touche1==0)
 touche1=1;
 enigme1(&ecran,&vie.nb,&score);
 }
-afficherfond(map,camera,ecran);
+afficherfond3(map,camera,ecran);
 afficherfond2(map1, camera2,ecran);
 afficheranubis(anubis ,ecran,camera);
 afficherperso(perso,ecran,x);
+afficherperso(perso1,ecran,x1);
 affichervie(&vie,ecran);
+affichervie(&vie2,ecran);
 DrawScore(ecran,&score,police);
+DrawScore1(ecran,&score1,police);
 SDL_BlitSurface(texte, NULL, ecran,&post);
    
 afficherennemi(ennemi,ecran,y);
