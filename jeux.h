@@ -83,8 +83,8 @@ perso mouvement(perso pers,int d, SDL_Rect camera);
 void afficherfond(map map,SDL_Rect camera,SDL_Surface *ecran);
 SDL_Rect scrolling(int d,SDL_Rect camera, perso pers);
 void collision(perso *p,SDL_Surface* pSurface, int d);
-
-
+void initialiservie2(vie *vie);
+void direction2(SDL_Event event,int *continuer, int *d, int *d1);
 SDL_Color GetPixel (SDL_Surface* pSurface , int x , int y);
 int collisione(perso *p,ennemis *e );
 int CCollision(SDL_Rect a, SDL_Rect b,SDL_Rect camera,int direction);
@@ -92,7 +92,7 @@ void initialiserfond(map *map);
 int collision_Parfaite(SDL_Surface *calque,perso perso,int decalage,int d);
 int mouv(int d,int x);
 void afficherperso(perso perso,SDL_Surface *ecran,int x);
-
+SDL_Rect scrolling2(int d,SDL_Rect camera,perso pers);
 void initialiserfond2(map *map);
 void afficherfond2(map map,SDL_Rect camera,SDL_Surface *ecran);
   void newgame(SDL_Surface **ecran);
@@ -102,4 +102,9 @@ void menu (SDL_Surface * ecran);
 void  game1(SDL_Surface *ecran);
 void collisionennemi(perso *perso,ennemis *ennemi,SDL_Rect *camera,vie *vie);
  void oneortwo(SDL_Surface **ecran);
+void initialiserfond3(map *map);
+void initialiserperso1(perso *perso);
+void DrawScore1(SDL_Surface *screen, int* score,TTF_Font *police);
+void affichervie2(vie *vie , SDL_Surface *ecran);
+void afficherfond3(map map,SDL_Rect camera,SDL_Surface *ecran);
 #endif
