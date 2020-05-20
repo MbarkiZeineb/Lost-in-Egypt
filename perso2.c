@@ -4,6 +4,20 @@
 #include <SDL/SDL_mixer.h>
 #include "jeux.h"
 #include <time.h>
+void initialiserperso1(perso *perso)
+{
+perso->position.x =2 ;
+perso->position.y =500;
+perso->image0 = IMG_Load("personnage/01.png");
+perso->image1 = IMG_Load("personnage/11.png");
+perso->image2 = IMG_Load("personnage/22.png");
+perso->image3 = IMG_Load("personnage/33.png");
+perso->imagea = IMG_Load("personnage/a1.png");
+perso->imageb = IMG_Load("personnage/b1.png");
+perso->imagec = IMG_Load("personnage/c1.png");
+}
+
+
 void afficherfond2(map map,SDL_Rect camera,SDL_Surface *ecran)
 {
 SDL_BlitSurface(map.fond,&camera, ecran,&map.position);
@@ -42,40 +56,39 @@ if(d==2&&pers.position.x<=600)
 camera.x=camera.x-20;
 }
 }
-int direction2(SDL_Event event,int *continuer)
-{
-int d;
-SDL_PollEvent(&event);
+void direction2(SDL_Event event,int *continuer, int *d, int *d1)
+{ int keys[322]={0};
 switch(event.type)
     {
-        case SDL_QUIT:
-            *continuer = 0;
-  		break;
-	case SDL_KEYDOWN:
+        case SDL_KEYDOWN:
+            keys[event.key.keysym.sym]=1;
+            break;
+     case SDL_KEYUP:
+            keys[event.key.keysym.sym]=0;
+            break;
+} 
+		if(keys[SDLK_q])
+		{*d1=2;	}
+                   
 
-            switch (event.key.keysym.sym)
-            {
- 		case SDLK_ESCAPE:
-		    continuer=0;
-			break ;
+		if(keys[SDLK_d])
+		*d1=1; 
+			
 
-		case SDLK_q :
-		d=2;	
-                    	break ;
+		if(keys[SDLK_z])
+		*d1=3;	
+                    	
+              if(keys[SDLK_s])
+		*d1=4; 
+	      if(keys[SDLK_LEFT])
+		*d=2;	
+                if(keys[SDLK_RIGHT])    	
+		*d=1; 
+		if(keys[SDLK_UP])
+		*d=3;	
+                  if(keys[SDLK_DOWN])
+		*d=4; 
+			
+    
 
-		case SDLK_d :
-		d=1; 
-			break ;
-
-		case SDLK_z :
-		d=3;	
-                    	break ;
-
-		case SDLK_s :
-		d=4; 
-			break ;
-	    }
-		break;
-    }
-return d;
 } 
