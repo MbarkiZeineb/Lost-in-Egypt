@@ -4,6 +4,7 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_ttf.h>
+#include <SDL/SDL_rotozoom.h>
 #include"jeux.h"
 #include <time.h>
 
@@ -356,8 +357,8 @@ SDL_Surface* aff2=IMG_Load("menu/oneplayer.png");
 				}
 				else if(event.button.x>521 && event.button.x<743 && event.button.y>420 && event.button.y<504)
 				{
-				   
-                                      game1(*ecran);
+				   player(ecran);
+                                            
 				}
 			}
 			break;
@@ -366,7 +367,65 @@ SDL_Surface* aff2=IMG_Load("menu/oneplayer.png");
 }
 
 
+void player(SDL_Surface **ecran)
+{
+SDL_Surface* aff2=IMG_Load("player1.png");
+	SDL_Surface* aff3=IMG_Load("player2.png");
+	SDL_Surface* bg=IMG_Load("menu/masr.png");
+     
+	
+            SDL_Rect p1,p2;
+	*ecran = SDL_SetVideoMode(1000,700, 32, SDL_HWSURFACE | SDL_DOUBLEBUF );  
+          
+	
+         p1.x=220;
+         p1.y=420;
+          p2.x=521;
+         p2.y=420;
+        SDL_BlitSurface(bg,NULL, *ecran,NULL);
+        SDL_BlitSurface(aff2,NULL, *ecran,&p1);
+        SDL_BlitSurface(aff3,NULL, *ecran,&p2);
+	 int continuer=1;
+	SDL_Flip(*ecran);
+	SDL_Event event;
+	while(continuer)
+	{SDL_WaitEvent(&event);
+		switch(event.type)
+		{
+		case SDL_KEYDOWN :
+			{
+				if(event.key.keysym.sym==SDLK_q)
+				{
+					exit(0);
+				}
+			}
+			break;
+			case SDL_MOUSEBUTTONDOWN :
+			{
+				if(event.button.x>230 && event.button.x<452 && event.button.y>420 && event.button.y<504)
+				{
+                                       game1p2(*ecran,0);
+                                      
+				}
+				else if(event.button.x>521 && event.button.x<743 && event.button.y>420 && event.button.y<504)
+				{
+				    game1(*ecran,0); 	
+                                      
+				}
+			}
+			break;
+		
 
+
+}
+	}
+
+
+
+
+
+
+}
 
   void newgame(SDL_Surface **ecran)
 {
@@ -436,7 +495,7 @@ SDL_Surface* aff3=IMG_Load("menu/newgame.png");
 				}
 				else if(event.button.x>521 && event.button.x<743 && event.button.y>420 && event.button.y<504)
 				{
-					game2(*ecran,1); 
+					game1(*ecran,1); 
 				}
 			}
 			break;

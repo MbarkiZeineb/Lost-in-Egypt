@@ -2,6 +2,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
+#include <SDL/SDL_rotozoom.h>
 #include "jeux.h"
 #include <time.h>
 #include <unistd.h>
@@ -22,7 +23,7 @@ void afficheranubis(anubis anubis,SDL_Surface *ecran,SDL_Rect camera)
 void initialiserennemi(ennemis *ennemi)
 {
 ennemi->position.x = 500 ;
-ennemi->position.y = 275;
+ennemi->position.y = 300;
 ennemi->fond1 = IMG_Load("x1.png");
 ennemi->fond2 = IMG_Load("x2.png");
 ennemi->fonda = IMG_Load("xa.png");
