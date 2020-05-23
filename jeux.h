@@ -8,7 +8,7 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_ttf.h>
-
+#include <SDL/SDL_rotozoom.h>
 
 
 typedef struct perso
@@ -61,7 +61,7 @@ typedef struct
  SDL_Surface * img;
  SDL_Rect 	p;
 }enigme;
-
+void initialiserperso2(perso *perso);
 void init_enigme(enigme * e) ;
  void generate_afficher (SDL_Surface * screen  , char image [],enigme *e,int *alea);
  int solution_e (char image []) ;
@@ -91,20 +91,24 @@ int CCollision(SDL_Rect a, SDL_Rect b,SDL_Rect camera,int direction);
 void initialiserfond(map *map);
 int collision_Parfaite(SDL_Surface *calque,perso perso,int decalage,int d);
 int mouv(int d,int x);
+void initialiserfond2(map *map);
+void player(SDL_Surface **ecran);
 void afficherperso(perso perso,SDL_Surface *ecran,int x);
 SDL_Rect scrolling2(int d,SDL_Rect camera,perso pers);
-void initialiserfond2(map *map);
+void initialiserfond4(map *map);
 void afficherfond2(map map,SDL_Rect camera,SDL_Surface *ecran);
   void newgame(SDL_Surface **ecran);
 void game2(SDL_Surface *ecran,int save);
 int quitscreen(SDL_Surface **ecran,perso P,SDL_Rect camera,int  score );
 void menu (SDL_Surface * ecran);
-void  game1(SDL_Surface *ecran);
+void  game1(SDL_Surface *ecran,int test);
 void collisionennemi(perso *perso,ennemis *ennemi,SDL_Rect *camera,vie *vie);
  void oneortwo(SDL_Surface **ecran);
 void initialiserfond3(map *map);
 void initialiserperso1(perso *perso);
+void  game1p2(SDL_Surface *ecran,int test);
 void DrawScore1(SDL_Surface *screen, int* score,TTF_Font *police);
 void affichervie2(vie *vie , SDL_Surface *ecran);
 void afficherfond3(map map,SDL_Rect camera,SDL_Surface *ecran);
+void roto(SDL_Surface *screen,SDL_Surface *image, SDL_Surface *rotation ,SDL_Rect rect);
 #endif
