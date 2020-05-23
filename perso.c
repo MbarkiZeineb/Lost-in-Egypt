@@ -3,6 +3,7 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_ttf.h>
+#include <SDL/SDL_rotozoom.h>
 #include <math.h>
 #include <time.h>
 #include <stdbool.h>
@@ -12,8 +13,8 @@
 
 void initialiserperso(perso *perso)
 {
-perso->position.x =500 ;
-perso->position.y =275;
+perso->position.x =2 ;
+perso->position.y =300;
 perso->image0 = IMG_Load("personnage/0.png");
 perso->image1 = IMG_Load("personnage/1.png");
 perso->image2 = IMG_Load("personnage/2.png");
@@ -22,7 +23,18 @@ perso->imagea = IMG_Load("personnage/a.png");
 perso->imageb = IMG_Load("personnage/b.png");
 perso->imagec = IMG_Load("personnage/c.png");
 }
-
+void initialiserperso2(perso *perso)
+{
+perso->position.x =0 ;
+perso->position.y =400;
+perso->image0 = IMG_Load("personnage/P0.png");
+perso->image1 = IMG_Load("personnage/P1.png");
+perso->image2 = IMG_Load("personnage/P2.png");
+perso->image3 = IMG_Load("personnage/P3.png");
+perso->imagea = IMG_Load("personnage/Pa.png");
+perso->imageb = IMG_Load("personnage/Pb.png");
+perso->imagec = IMG_Load("personnage/Pc.png");
+}
 int direction(SDL_Event event,int *continuer)
 {
 int d;
