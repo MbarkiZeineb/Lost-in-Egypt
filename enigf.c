@@ -12,7 +12,15 @@ void roto(SDL_Surface *screen,SDL_Surface *image, SDL_Surface *rotation ,SDL_Rec
 	int tempsActuel = 0; int tempsPrecedent = 0; int done;
 	Uint32 oldTime = SDL_GetTicks();
 	done = 1; int angle = 0;
-	while(done){
+            int i;
+           for (i = 0; i < 180; i++)
+						{
+						SDL_Surface*rotation = rotozoomSurface(image, i, 1, 3);
+							SDL_BlitSurface(rotation, NULL, screen, &rect);
+							SDL_FreeSurface(rotation);
+							SDL_Flip(screen);
+						}
+	/*while(done){
 		angle += 2;
 		
 		rotation =rotozoomSurface(image, angle, 1.5, 1);
@@ -21,10 +29,10 @@ void roto(SDL_Surface *screen,SDL_Surface *image, SDL_Surface *rotation ,SDL_Rec
 		SDL_FreeSurface(rotation);
 		if(SDL_GetTicks() - oldTime > 600){
 			done = 0;
-		}
+		}*/
 
     }
-}
+
 void init_enigme(enigme * e)
 {
 	e->p.x=0;
@@ -139,15 +147,18 @@ int enigme1(SDL_Surface **ecran,int *victory, int *score)
  post.y=10;
  TTF_Init(); 
  police = TTF_OpenFont("Takota.ttf", 50);
-   
+   t1 = SDL_GetTicks();  
 	init_enigme(&e);
-	
+	int a,b;
+a=t2/1000/60%60;
+b=t2/1000%60;
 	 while (run)
-	 {t1 = SDL_GetTicks();  
+	 {
           t2 = SDL_GetTicks()-t1;     
-        sprintf(chrono, "%d:%d", t2/1000/60%60, t2/1000%60);
+          sprintf(chrono, "%d:%d",a, b);
          texte = TTF_RenderText_Shaded(police, chrono, rouge,noir);
-	     running=1,r=0 ;
+	     running=1,r=0 ; 
+                SDL_BlitSurface(texte, NULL, *ecran,&post);
 	     SDL_PollEvent(&event);
            switch(event.type)
             {
@@ -171,14 +182,13 @@ int enigme1(SDL_Surface **ecran,int *victory, int *score)
 (*score)-=20;}
    if(r==s)
  {(*score)+=20;}
-
+      
 			      	 SDL_WaitEvent(&event);
 					running=0;
 					run=0;
-                    
-                     
+    SDL_BlitSurface(texte, NULL, *ecran,&post);                     
  } 
-SDL_BlitSurface(texte, NULL, *ecran,&post);	
+ SDL_BlitSurface(texte, NULL, *ecran,&post);	
    }
 
 

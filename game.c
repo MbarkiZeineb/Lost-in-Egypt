@@ -6,16 +6,17 @@
 #include <SDL/SDL_rotozoom.h>
 #include"jeux.h"
 #include <time.h>
+
 void  game1p2(SDL_Surface *ecran,int test)
 {
 char chrono[16];
   TTF_Font *police;
-  int  t1=0, t2=0;
+  Uint32  t1, t2;
   SDL_Surface  *texte =  NULL;
   SDL_Color noir = {255,255,180,0}, rouge = {100,0,0};
 SDL_Surface *fond=NULL;
 SDL_Rect position;
-
+int test1=0;
 ennemis ennemi ;
 int continuer = 1;
 map map;
@@ -49,7 +50,7 @@ SDL_Init(SDL_INIT_VIDEO| SDL_INIT_TIMER );
 
 ecran = SDL_SetVideoMode(1200,600, 32, SDL_HWSURFACE | SDL_DOUBLEBUF );  
 
-  police = TTF_OpenFont("Takota.ttf", 50);
+  police = TTF_OpenFont("Pegypta.ttf", 50);
    
  
     
@@ -71,10 +72,12 @@ if(test==1)
 FILE* f=fopen("savedgame.txt","r");
 fscanf(f,"%hd %hd %hd %d  \n",&perso.position.x,&perso.position.y,&camera.x,&score);
  fclose(f);}
+
+t1 = SDL_GetTicks(); 
 while (continuer)
 { 
  
-     t2 = SDL_GetTicks();      
+t2 = SDL_GetTicks()-t1;        
     sprintf(chrono, "%d:%d", t2/1000/60%60, t2/1000%60);
     texte = TTF_RenderText_Shaded(police, chrono, rouge,noir);
 
@@ -91,7 +94,6 @@ if(collision_Parfaite(pSurface,perso,-50,d)==1)
 perso.position.y-=30;
 
 }
-
 if(camera.x==2000&&touche==0)
 {
 touche=1;
@@ -103,8 +105,9 @@ touche1=1;
 enigme1(&ecran,&vie.nb,&score);
 }
 afficherfond(map,camera,ecran);
-
-afficheranubis(anubis ,ecran,camera);
+if(test1<2)
+{afficheranubis(anubis ,ecran,camera);
+ test1++;}
 afficherperso(perso,ecran,x);
 affichervie(&vie,ecran);
 DrawScore(ecran,&score,police);
@@ -124,27 +127,25 @@ case SDL_KEYDOWN:
  		case SDLK_ESCAPE:
 		  
     
- continuer=quitscreen(&ecran,perso,camera,score);
+ continuer=quitscreen(&ecran,perso,camera,score,2);
 break;
 
 }
 }
 if(camera.x==7000)
-{
-SDL_Delay(1000);
-game1(ecran,0);
+{ finjeu(ecran);
+ SDL_Delay(1000);
 }
 }
 TTF_Quit();
 SDL_Quit();
 }
 
-
 void  game1(SDL_Surface *ecran,int test)
 {
 char chrono[16];
   TTF_Font *police;
-  int  t1=0, t2=0;
+  Uint32  t1, t2;
   SDL_Surface  *texte =  NULL;
   SDL_Color noir = {255,255,180,0}, rouge = {100,0,0};
 SDL_Surface *fond=NULL;
@@ -168,7 +169,7 @@ anubis anubis;
 int q,w=10;
 srand(time(NULL)) ;
 
-
+int test1=0;
 int x=0,y=1;
 
 camera.x=0;
@@ -205,10 +206,11 @@ if(test==1)
 FILE* f=fopen("savedgame.txt","r");
 fscanf(f,"%hd %hd %hd %d  \n",&perso.position.x,&perso.position.y,&camera.x,&score);
  fclose(f);}
+t1 = SDL_GetTicks(); 
 while (continuer)
 { 
  
- t2 = SDL_GetTicks();       //Minute       //Seconde   //Dixieme
+ t2 = SDL_GetTicks()-t1;       //Minute       //Seconde   //Dixieme
     sprintf(chrono, "%d:%d", t2/1000/60%60, t2/1000%60);
     texte = TTF_RenderText_Shaded(police, chrono, rouge,noir);
 
@@ -216,12 +218,10 @@ d=direction(event,&continuer);
 x = mouv(d,x);
 y=splitennemi(y);
 camera =scrolling(d,camera,perso);
-perso=mouvement(perso, d,camera);
+perso=mouvement1(perso, d,camera,&map);
+
 ennemi=mouvennemi(ennemi,d,camera,&q,&w,&y);
 collisionennemi(&perso,&ennemi,&camera,&vie);
-
-//collision(&perso,pSurface,d);
-
 
 if(collision_Parfaite(pSurface,perso,10,d)==1)
 {camera.x=camera.x-10;
@@ -247,8 +247,10 @@ if(camera.x==2500&&touche1==0)
 touche1=1;
 enigme1(&ecran,&vie.nb,&score);
 }
-afficherfond(map,camera,ecran);
-afficheranubis(anubis ,ecran,camera);
+afficherfond1(&map,camera,ecran);
+if(test1<2)
+{afficheranubis(anubis ,ecran,camera);
+ test1++;}
 afficherperso(perso,ecran,x);
 affichervie(&vie,ecran);
 DrawScore(ecran,&score,police);
@@ -269,16 +271,15 @@ case SDL_KEYDOWN:
  		case SDLK_ESCAPE:
 		  
     
- continuer=quitscreen(&ecran,perso,camera,score);
+ continuer=quitscreen(&ecran,perso,camera,score,1);
 break;
 
 }
 }
 if(camera.x==7000)
-{
-SDL_Delay(1000);
-game1(ecran,0);
+{ finjeu(ecran);
 }
+
 }
 
 //free(&map,&perso);
@@ -291,7 +292,7 @@ void game2(SDL_Surface *ecran,int save)
 {
 char chrono[16];
   TTF_Font *police;
-  int  t1=0, t2=0;
+  Uint32  t1, t2;
   SDL_Surface  *texte =  NULL;
   SDL_Color noir = {255,255,180,0}, rouge = {100,0,0};
 
@@ -353,10 +354,12 @@ initialiservie(&vie);
 initialiservie2(&vie2);
 init_enigme(&e);
 int keys[322]={0};
-SDL_EnableKeyRepeat(10,10);
+SDL_EnableKeyRepeat(30,30);
+SDL_EnableKeyRepeat(30,30);
+t1 = SDL_GetTicks();
 while (continuer)
 { 
-SDL_WaitEvent(&event);
+while(SDL_PollEvent(&event)){
 switch(event.type)
 {case SDL_KEYDOWN:
             keys[event.key.keysym.sym]=1;
@@ -384,16 +387,16 @@ switch(event.type)
                   if(keys[SDLK_DOWN])
 		{d=4; }	
  		if(keys[SDLK_ESCAPE])
-         {continuer=quitscreen(&ecran,perso,camera,score);}
-
- t2 = SDL_GetTicks();       //Minute       //Seconde   //Dixieme
+         {continuer=quitscreen(&ecran,perso,camera,score,1);}
+}
+ t2 = SDL_GetTicks()-t1;       //Minute       //Seconde   //Dixieme
     sprintf(chrono, "%d:%d", t2/1000/60%60, t2/1000%60);
     texte = TTF_RenderText_Shaded(police, chrono, rouge,noir);
 x = mouv(d,x);
 x1 = mouv(d1,x1);
 y=splitennemi(y);
 
-perso=mouvement(perso, d,camera);
+perso=mouvement(perso,d,camera);
 perso1=mouvement(perso1, d1,camera2);
 camera =scrolling(d,camera,perso);
 camera2 =scrolling(d1,camera2,perso1);
