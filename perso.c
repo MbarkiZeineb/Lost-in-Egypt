@@ -174,28 +174,62 @@ SDL_BlitSurface(perso.imagec,NULL, ecran,&perso.position);
 	break ;
 }
 }
-
- perso mouvement(perso pers,int d, SDL_Rect camera)
+perso mouvement(perso pers,int d, SDL_Rect camera )
 { 
 if(pers.position.x>=940)
 pers.position.x-=20;
+
 if(pers.position.x<=0)
 pers.position.x+=20;
+
 if((d==1 && pers.position.x<600)|| (d==1 && camera.x>=8000))
 {
 pers.position.x=pers.position.x+20;
-}
 
+}
 if ((d==2 && pers.position.x>600)  || (d==2 && camera.x<=0))
 {
 pers.position.x=pers.position.x-20;
+
 }
 if(d==3 && pers.position.y<600)
 {
 pers.position.y-=20;
+
 }
 if(d==4 && pers.position.y<600){
 pers.position.y+=20;
+}
+
+return pers;
+}
+
+ perso mouvement1(perso pers,int d, SDL_Rect camera , map *map)
+{ 
+if(pers.position.x>=940)
+pers.position.x-=20;
+map->posnokta.x-=5;
+if(pers.position.x<=0)
+pers.position.x+=20;
+map->posnokta.x+=5;
+if((d==1 && pers.position.x<600)|| (d==1 && camera.x>=8000))
+{
+pers.position.x=pers.position.x+20;
+map->posnokta.x+=5;
+}
+if ((d==2 && pers.position.x>600)  || (d==2 && camera.x<=0))
+{
+pers.position.x=pers.position.x-20;
+map->posnokta.x-=5;
+}
+if(d==3 && pers.position.y<600)
+{
+pers.position.y-=20;
+map->posnokta.y-=5;
+}
+if(d==4 && pers.position.y<600){
+pers.position.y+=20;
+map->posnokta.y+=5;
 }
 
 return pers;

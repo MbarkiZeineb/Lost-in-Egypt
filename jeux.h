@@ -40,6 +40,10 @@ typedef struct
 {
 	SDL_Rect position;
 	SDL_Surface *fond;
+         SDL_Surface* imagemini;
+         SDL_Rect posmini;
+         SDL_Surface* imagenokta;
+           SDL_Rect posnokta;
 }map;
 
 typedef struct ennemis
@@ -61,6 +65,8 @@ typedef struct
  SDL_Surface * img;
  SDL_Rect 	p;
 }enigme;
+void coat (SDL_Surface *screen);
+void finjeu (SDL_Surface *screen);
 void initialiserperso2(perso *perso);
 void init_enigme(enigme * e) ;
  void generate_afficher (SDL_Surface * screen  , char image [],enigme *e,int *alea);
@@ -79,7 +85,9 @@ void affichervie(vie *vie,SDL_Surface *ecran);
 void afficherennemi(ennemis ennemi,SDL_Surface *ecran,int y);
 void initialiserperso(perso *perso);
 int direction(SDL_Event event,int *continuer);
-perso mouvement(perso pers,int d, SDL_Rect camera);
+perso mouvement(perso pers,int d, SDL_Rect camera );
+ perso mouvement1(perso pers,int d, SDL_Rect camera , map *map);
+void afficherfond1(map *map,SDL_Rect camera,SDL_Surface *ecran);
 void afficherfond(map map,SDL_Rect camera,SDL_Surface *ecran);
 SDL_Rect scrolling(int d,SDL_Rect camera, perso pers);
 void collision(perso *p,SDL_Surface* pSurface, int d);
@@ -99,7 +107,7 @@ void initialiserfond4(map *map);
 void afficherfond2(map map,SDL_Rect camera,SDL_Surface *ecran);
   void newgame(SDL_Surface **ecran);
 void game2(SDL_Surface *ecran,int save);
-int quitscreen(SDL_Surface **ecran,perso P,SDL_Rect camera,int  score );
+int quitscreen(SDL_Surface **ecran,perso P,SDL_Rect camera,int  score ,int p );
 void menu (SDL_Surface * ecran);
 void  game1(SDL_Surface *ecran,int test);
 void collisionennemi(perso *perso,ennemis *ennemi,SDL_Rect *camera,vie *vie);

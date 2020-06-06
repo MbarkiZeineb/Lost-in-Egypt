@@ -59,7 +59,8 @@ camera.x=camera.x-20;
 }
 void direction2(SDL_Event event,int *continuer, int *d, int *d1)
 { int keys[322]={0};
-switch(event.type)
+ SDL_PollEvent(&event);
+ switch(event.type)
     {
         case SDL_KEYDOWN:
             keys[event.key.keysym.sym]=1;
