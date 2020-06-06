@@ -167,8 +167,7 @@ SDL_Surface *collisionMap =NULL;
 SDL_Rect camera = { 0, 0, 1200, 600 },post;
 anubis anubis;
 int q,w=10;
-srand(time(NULL)) ;
-
+srand(time(NULL));
 int test1=0;
 int x=0,y=1;
 
@@ -248,9 +247,9 @@ touche1=1;
 enigme1(&ecran,&vie.nb,&score);
 }
 afficherfond1(&map,camera,ecran);
-if(test1<2)
-{afficheranubis(anubis ,ecran,camera);
- test1++;}
+
+afficheranubis(anubis ,ecran,camera);
+
 afficherperso(perso,ecran,x);
 affichervie(&vie,ecran);
 DrawScore(ecran,&score,police);
