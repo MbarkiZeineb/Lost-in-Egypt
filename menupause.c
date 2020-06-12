@@ -1,9 +1,8 @@
 
 /**
 * @file menupause.c 
-
-*
 * @ author mbarki Zeineb
+* @brief menupause
 * @ version 1.0
 * @ date juin 06 , 2020
 */
@@ -48,16 +47,24 @@ SDL_Surface* aff2=IMG_Load("menu/oneplayer.png");
 				if(event.motion.x>230 && event.motion.x<452 && event.motion.y>420 && event.motion.y<504)
 				{
 					SDL_BlitSurface(bg,NULL, *ecran,NULL);
-					  SDL_BlitSurface(aff2,NULL, *ecran,&pq);
+					  SDL_BlitSurface(aff3,NULL, *ecran,&pq);
 	                             
 	
 					
 					SDL_Flip(*ecran);
 				}
-				else if(event.motion.x>521 && event.motion.x<743 && event.motion.y>420 && event.motion.y<504)
+                                 else 
+				{
+					SDL_BlitSurface(bg,NULL,* ecran,NULL);
+				        SDL_BlitSurface(aff1,NULL,* ecran,&pq);
+	                             
+	
+					SDL_Flip(*ecran);
+				}
+				 if(event.motion.x>521 && event.motion.x<743 && event.motion.y>420 && event.motion.y<504)
 				{
 					SDL_BlitSurface(bg,NULL, *ecran,NULL);
-					  SDL_BlitSurface(aff3,NULL, *ecran,&pq);
+					  SDL_BlitSurface(aff2,NULL, *ecran,&pq);
 	                         SDL_Flip(*ecran);
 	
 				}
@@ -198,8 +205,16 @@ SDL_Surface* aff3=IMG_Load("menu/newgame.png");
 	
 					
 					SDL_Flip(*ecran);
+				} 
+                                    else 
+				{
+					SDL_BlitSurface(bg,NULL,* ecran,NULL);
+				        SDL_BlitSurface(aff1,NULL,* ecran,&pq);
+	                             
+	
+					SDL_Flip(*ecran);
 				}
-				else if(event.motion.x>521 && event.motion.x<743 && event.motion.y>420 && event.motion.y<504)
+				if(event.motion.x>521 && event.motion.x<743 && event.motion.y>420 && event.motion.y<504)
 				{
 					SDL_BlitSurface(bg,NULL, *ecran,NULL);
 					  SDL_BlitSurface(aff3,NULL, *ecran,&pq);
