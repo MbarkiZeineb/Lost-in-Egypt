@@ -7,8 +7,8 @@
 #include"jeux.h"
 #include <time.h>
 void menu (SDL_Surface * ecran)
-    {SDL_Surface  * imageDeFond = NULL, *imageDeFond1= NULL, * affiche[2]={NULL}, * affiche1[2]={NULL} , * affiche2[2]={NULL} ;
- SDL_Rect positionFond, positionAffiche, positionAffiche1, positionAffiche2,positionFond1;
+    {SDL_Surface  * imageDeFond = NULL, *imageDeFond1= NULL, * affiche[2]={NULL}, * affiche1[2]={NULL} , * affiche2[2]={NULL} , *souris=NULL ,*clavier=NULL ;
+ SDL_Rect positionFond, positionAffiche, positionAffiche1, positionAffiche2,positionFond1, psouris,pclavier;
  SDL_Rect positionoption;
  SDL_Rect posText;
 SDL_Surface *optionz= NULL,*back= NULL,*sound_on=NULL,*sound_off=NULL,*FULLSCREEN[2]={NULL};
@@ -52,6 +52,10 @@ positionsound2.y=350;
       pop.y =30;
 positionf.x=620;
 positionf.y=550;
+pclavier.x=1000;
+pclavier.y=30;
+psouris.y=30;
+psouris.x=1100;
 
     //SDL_Init(SDL_INIT_VIDEO);
  TTF_Init();
@@ -70,6 +74,8 @@ animation[q]=IMG_Load(tab_animation);
 }
 q=0;
    int a=0,b=0,c=0,j=0;
+clavier=IMG_Load("clavier.png");
+souris=IMG_Load("souris.png");
 optionz=IMG_Load("menu/op.png");
 sound_on=IMG_Load("menu/son.png");
 sound_off=IMG_Load("menu/sonn.png");
@@ -251,7 +257,8 @@ SDL_BlitSurface(optionz, NULL, ecran, & positionFond);
 SDL_BlitSurface(text2, NULL, ecran, &pop);
 SDL_BlitSurface(sound_on,NULL,ecran,&positionsound);
 SDL_BlitSurface(sound_off,NULL,ecran,&positionsound2);
-				
+SDL_BlitSurface(clavier, NULL, ecran, & pclavier);
+SDL_BlitSurface(souris, NULL, ecran, & psouris);				
 if (fullscreen==0)
 					{
 					 SDL_BlitSurface(FULLSCREEN[1],NULL,ecran,&positionf);
